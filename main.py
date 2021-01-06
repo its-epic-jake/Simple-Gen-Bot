@@ -35,7 +35,7 @@ async def info(ctx):
 
 #genaccount
 @bot.command()
-@commands.cooldown(1, 300, commands.BucketType.user)
+@commands.cooldown(1, int(open('cooldown.txt', 'r').read()), commands.BucketType.user)
 async def genaccount(ctx):
   filesize = os.path.getsize("accounts.txt")
 
@@ -60,8 +60,7 @@ async def genaccount(ctx):
 @genaccount.error
 async def mine_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
-        msg = 'This command is on cooldown, please try again in {:.2f} / 5m.'.format(error.retry_after)
-        await ctx.send(msg)
+        await ctx.send('This command is on cooldown.')
     else:
         raise error
 
