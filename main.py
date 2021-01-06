@@ -6,10 +6,6 @@ def get_prefix(client, message):
     prefixes = ['!']
     return commands.when_mentioned_or(*prefixes)(client, message)
 
-    @bot.event
-    async def on_ready():
-      print("bot has started")
-      
 
 bot = commands.Bot(                                         
     command_prefix=get_prefix,                              
@@ -18,6 +14,11 @@ bot = commands.Bot(
 )
 
 bot.remove_command('help')
+
+@bot.event
+async def  on_ready():
+    print("Ready!")
+      
 
 #help
 @bot.command(pass_context = True)
@@ -79,4 +80,4 @@ async def stock(ctx):
   embedVar.add_field(name="accounts", value=accounts, inline=True)
   await ctx.send(embed=embedVar)
 
-bot.run('TOKEN', bot=True, reconnect=True)
+bot.run(open('token.txt', 'r').read(), bot=True, reconnect=True)
